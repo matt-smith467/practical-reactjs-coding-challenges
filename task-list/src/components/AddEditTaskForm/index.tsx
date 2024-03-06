@@ -4,8 +4,16 @@ import Button from "../Button"
 import Input from "../Input"
 import Modal from "../Modal"
 import "./style.scss"
+import { useTaskListData } from "../../contexts"
+import { useContext } from "react"
 
-const AddEditTaskForm = () => {
+interface AddEditTaskFormProps {
+  onAddTask: () => void
+}
+
+const AddEditTaskForm: React.FC<AddEditTaskFormProps> = ({ onAddTask }) => {
+  const tasks = useTaskListData()
+
   return (
     <Modal>
       <form>
@@ -26,7 +34,7 @@ const AddEditTaskForm = () => {
             </ul>
           </div>
           <div className="flx-right mt-50">
-            <Button title="Add" onClick={() => {}} />
+            <Button title="Add" onClick={onAddTask} />
           </div>
         </div>
       </form>

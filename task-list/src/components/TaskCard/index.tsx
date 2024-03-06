@@ -3,9 +3,23 @@ import { ReactComponent as DeleteIcon } from "../../assets/icons/delete.svg"
 import { ReactComponent as EditIcon } from "../../assets/icons/edit.svg"
 import CircularProgressBar from "../CircularProgressBar"
 import "./style.scss"
+import { useState } from "react"
+import DeleteModal from "../DeleteModal"
 
-const TaskCard = ({ task }: any) => {
+interface TaskCardProps {
+  onDeleteClick: (id: string) => void
+  task: {
+    id: string
+    title: string
+    priority: string
+    status: string
+    progress: number
+  }
+}
+
+const TaskCard: React.FC<TaskCardProps> = ({ onDeleteClick, task }) => {
   const { id, title, priority, status, progress } = task
+  const [deleteModal, setDeleteModal] = useState(false)
 
   return (
     <div className="task-card">
@@ -25,8 +39,9 @@ const TaskCard = ({ task }: any) => {
       </div>
       <div className="actions">
         <EditIcon className="mr-20 cp" />
-        <DeleteIcon className="cp" />
+        <DeleteIcon className="cp" onClick={() => setDeleteModal(!deleteModal)} />
       </div>
+      {deleteModal && <DeleteModal onDeleteClick={onDeleteClick} id={id} />}
     </div>
   )
 }
